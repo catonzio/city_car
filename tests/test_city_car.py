@@ -1,5 +1,6 @@
 import pytest
-from city_car.models import Position, Car, Entity
+
+from city_car.models_old import Car, Entity, Position
 
 
 # Sample Test Data

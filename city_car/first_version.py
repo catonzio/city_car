@@ -1,9 +1,9 @@
-import pygame
 import sys
 
+import pygame
 import pygame_gui
 
-from city_car.models import Car, Position
+from city_car.models_old import Car, Position
 
 # Initialize Pygame
 pygame.init()

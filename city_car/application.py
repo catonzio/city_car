@@ -1,85 +1,11 @@
-from dataclasses import dataclass
 import sys
-from pygame import Surface, Rect, Event
+
 import pygame
-from city_car.models import Car, Entity, Position
+from pygame import Surface
+from pygame.event import Event
 from pygame.font import Font
-from pygame_gui import UIManager
-from pygame_gui.core import UIElement
-from pygame_gui.elements import UIHorizontalSlider
 
-
-@dataclass
-class UiState:
-    slider_value: float = 0
-
-
-class Colors:
-    RED = (83, 0, 0)
-    GREEN = (35, 101, 51)
-    BLUE = (0, 0, 255)
-    WHITE = (255, 255, 255)
-    BLACK = (0, 0, 0)
-    YELLOW = (255, 255, 0)
-    CYAN = (0, 255, 255)
-    MAGENTA = (255, 0, 255)
-    ORANGE = (255, 165, 0)
-    PURPLE = (128, 0, 128)
-
-
-class GameEngine:
-    player: Car
-    obstacles: list[Entity]
-
-    def __init__(self):
-        self.obstacles = []
-
-    def initialize(self):
-        self.player = Car(
-            id=1, position=Position(x=50, y=50), width=20, height=10, speed=1
-        )
-
-    def close(self): ...
-
-    def tick(self, time_delta: float, dx: float, dy: float, ui_state: UiState):
-        fromm = self.player.position
-        self.player.move(dx, dy)
-        to = self.player.position
-        self.player.speed = ui_state.slider_value
-
-
-class Overlay:
-    screen_width: int
-    screen_height: int
-    elements: dict[str, UIElement]
-    gui_manager: UIManager
-    state: UiState
-
-    def __init__(self, screen_width: int, screen_height: int):
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.elements = {}
-        self.gui_manager = UIManager((self.screen_width, self.screen_height))
-        self.state = UiState()
-
-    def initialize(self):
-        speed_slider = UIHorizontalSlider(
-            relative_rect=Rect((10, self.screen_height - 50), (200, 30)),
-            start_value=1,
-            value_range=(1, 20),
-            manager=self.gui_manager,
-        )
-        self.elements["speed_slider"] = speed_slider
-
-    def close(self): ...
-
-    def update(self, time_delta: float, events: list[Event]) -> UiState:
-        for event in events:
-            self.gui_manager.process_events(event)
-        self.gui_manager.update(time_delta)
-        self.state.slider_value = self.elements["speed_slider"].get_current_value()  # type: ignore
-
-        return self.state
+from city_car.core import Colors, GameEngine, Overlay, UiState
 
 
 class Application:
