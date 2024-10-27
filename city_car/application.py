@@ -1,13 +1,12 @@
-from math import pi
 import sys
+from math import pi
 
 import pygame
 from pygame import Surface
 from pygame.event import Event
 from pygame.font import Font
 
-from city_car.core import Colors, GameEngine, Overlay, UiState
-from city_car.core import car_keys_params
+from city_car.core import Colors, GameEngine, Overlay, UiState, car_keys_params
 from city_car.core.car_keys_params import CarKeysParams
 from city_car.models.car import Car
 from city_car.models.position import Position
@@ -52,9 +51,9 @@ class Application:
         if keys[pygame.K_RIGHT]:
             dx += pi / 20
         if keys[pygame.K_UP]:
-            dy += 2
+            dy += 10
         if keys[pygame.K_DOWN]:
-            dy -= 4
+            dy -= 15
 
         print(dx, dy)
         return CarKeysParams(dy, dx)

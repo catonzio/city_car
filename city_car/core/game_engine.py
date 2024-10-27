@@ -1,7 +1,9 @@
 from pygame import Surface
+
 from city_car.core.colors import Colors
+from city_car.models import Car, Obstacle, Position
+
 from .car_keys_params import CarKeysParams
-from city_car.models import Car, Position, Obstacle
 
 
 class GameEngine:
@@ -64,4 +66,4 @@ class GameEngine:
         self.player.draw(screen)
 
         for obstacle in self.obstacles:
-            obstacle.draw(screen)
+            obstacle.draw(screen, self.player.position)

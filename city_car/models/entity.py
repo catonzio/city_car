@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from .position import Position
 
@@ -6,7 +6,7 @@ from .position import Position
 @dataclass
 class Entity:
     id: int = 0
-    position: Position = Position.zero()
+    position: Position = field(default_factory=Position.zero)
     width: float = 0
     height: float = 0
 
