@@ -38,7 +38,9 @@ class Car(MovableMixin, Drawable):
             width=width,
             height=height,
         )
-        Drawable.__init__(self, id=id, position=position, width=width, height=height, color=color)
+        Drawable.__init__(
+            self, id=id, position=position, width=width, height=height, color=color
+        )
 
     def draw(self, screen: Surface):
         # pygame.draw.rect(screen, self.color, self.to_rect())

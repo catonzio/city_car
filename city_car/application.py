@@ -44,19 +44,21 @@ class Application:
         sys.exit()
 
     def detect_keypress(self) -> CarKeysParams:
-        dx, dy = 0, 0
+        acceleration, steer, handbrake, retro = 0, 0, 0, False
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            dx -= pi / 20
+            steer -= pi / 20
         if keys[pygame.K_RIGHT]:
-            dx += pi / 20
+            steer += pi / 20
         if keys[pygame.K_UP]:
-            dy += 10
+            acceleration += 10
         if keys[pygame.K_DOWN]:
-            dy -= 15
+            handbrake += 50
+        if keys[pygame.K_r]:
+            retro = True
 
-        print(dx, dy)
-        return CarKeysParams(dy, dx)
+        print(f"{acceleration=}, {steer=}, {handbrake=}, {retro=}")
+        return CarKeysParams(acceleration=acceleration, steer=steer, handbrake=handbrake, retro=retro)
 
     def draw_grid(self):
         blockSize = 25  # Set the size of the grid block

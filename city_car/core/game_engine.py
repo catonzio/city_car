@@ -59,7 +59,7 @@ class GameEngine:
 
     def tick(self, time_delta: float, car_key_params: CarKeysParams):
         self.player.move(
-            time_delta, car_key_params.delta_acceleration, car_key_params.delta_steer
+            time_delta, car_key_params
         )
 
     def draw(self, screen: Surface):
