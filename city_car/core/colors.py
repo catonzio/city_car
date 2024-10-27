@@ -3,6 +3,8 @@ class Colors:
     GREEN = (35, 101, 51)
     BLUE = (0, 0, 255)
     WHITE = (255, 255, 255)
+    LGREY = (107, 107, 107)
+    DGREY = (36, 36, 36)
     BLACK = (0, 0, 0)
     YELLOW = (255, 255, 0)
     CYAN = (0, 255, 255)
