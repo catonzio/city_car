@@ -4,6 +4,7 @@ from math import atan2, degrees, pi
 import pygame
 from pygame import SRCALPHA, Surface
 
+from city_car.configs.constants import SCREEN_CENTER
 from city_car.core.colors import Colors
 from city_car.models.drawable import Drawable
 from city_car.models.vector import Vector
@@ -49,8 +50,7 @@ class Car(MovableMixin, Drawable):
 
         rotated = pygame.transform.rotate(temp_surface, degrees(self.speed.angle()))
 
-        x, y = screen.size
-        pos = Position(x / 2, y / 2)
+        pos = Position(*SCREEN_CENTER)
         new_rect = rotated.get_rect(center=pos.to_tuple())
         screen.blit(rotated, new_rect.topleft)
 

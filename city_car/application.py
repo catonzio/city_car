@@ -1,11 +1,12 @@
 import sys
-from math import pi
+from math import degrees, pi
 
 import pygame
 from pygame import Surface
 from pygame.event import Event
 from pygame.font import Font
 
+from city_car.configs.constants import ACCELERATION, HANDBRAKE, TURN_ANGLE
 from city_car.core import Colors, GameEngine, Overlay, UiState, car_keys_params
 from city_car.core.car_keys_params import CarKeysParams
 from city_car.models.car import Car
@@ -47,18 +48,20 @@ class Application:
         acceleration, steer, handbrake, retro = 0, 0, 0, False
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            steer -= pi / 20
+            steer -= TURN_ANGLE
         if keys[pygame.K_RIGHT]:
-            steer += pi / 20
+            steer += TURN_ANGLE
         if keys[pygame.K_UP]:
-            acceleration += 10
+            acceleration += ACCELERATION
         if keys[pygame.K_DOWN]:
-            handbrake += 50
+            handbrake += HANDBRAKE
         if keys[pygame.K_r]:
             retro = True
 
         print(f"{acceleration=}, {steer=}, {handbrake=}, {retro=}")
-        return CarKeysParams(acceleration=acceleration, steer=steer, handbrake=handbrake, retro=retro)
+        return CarKeysParams(
+            acceleration=acceleration, steer=steer, handbrake=handbrake, retro=retro
+        )
 
     def draw_grid(self):
         blockSize = 25  # Set the size of the grid block
@@ -82,7 +85,7 @@ class Application:
         # render the text
         player: Car = self.game_engine.player
         coordinates_text = self.font.render(
-            f"{player.position}, s: {player.speed} sa: {player.steer_angle}",
+            f"{player.position}, s: {player.speed} sa: {degrees(player.steer_angle):.3f}, retro: {player.retro}",
             True,
             Colors.DGREY,
         )
