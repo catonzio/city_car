@@ -1,5 +1,6 @@
 from pygame import Surface
 
+from city_car.configs.constants import SCREEN_CENTER
 from city_car.core.colors import Colors
 from city_car.models import Car, Obstacle, Position
 
@@ -16,7 +17,7 @@ class GameEngine:
     def initialize(self):
         self.player = Car(
             id=1,
-            position=Position(x=250, y=250),
+            position=Position(*SCREEN_CENTER),
             width=40,
             height=20,
             steer_angle=0,
@@ -58,7 +59,7 @@ class GameEngine:
     def close(self): ...
 
     def tick(self, time_delta: float, car_key_params: CarKeysParams):
-        self.player.move(time_delta, car_key_params)
+        self.player.move(time_delta, car_key_params, self.obstacles)
 
     def draw(self, screen: Surface):
         self.player.draw(screen)

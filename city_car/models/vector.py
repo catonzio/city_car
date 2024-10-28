@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from math import atan2
+from math import atan2, sqrt
 
 from city_car.models.position import Position
 
@@ -24,8 +24,14 @@ class Vector:
         return NotImplemented
 
     def update(self, delta: Position | tuple[float, float]):
-        self.direction += Position(*delta) if isinstance(delta, tuple) else delta
-        self.value = (self.direction.x**2 + self.direction.y**2) ** 0.5
+        delta = Position(*delta) if isinstance(delta, tuple) else delta
+        self.set_direction(self.direction + delta)
+
+    def set_direction(self, direction: Position | tuple[float, float]):
+        self.direction = (
+            Position(*direction) if isinstance(direction, tuple) else direction
+        )
+        self.value = sqrt(self.direction.x**2 + self.direction.y**2)
 
     def angle(self):
         return atan2(self.direction.x, self.direction.y)
@@ -37,4 +43,7 @@ class Vector:
         return Position(self.direction.x / magnitude, self.direction.y / magnitude)
 
     def __str__(self) -> str:
+        return str(self.direction)
+
+    def __repr__(self) -> str:
         return str(self.direction)

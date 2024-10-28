@@ -1,14 +1,13 @@
 from dataclasses import dataclass
-from typing import List
+from typing import Sequence
 
 from .entity import Entity
 
 
 @dataclass
 class CollidableMixin(Entity):
-    radius: float = 0.2
 
-    def check_collision(self, other_entities: List[Entity]) -> bool:
+    def check_collision(self, other_entities: Sequence[Entity]) -> bool:
         for entity in other_entities:
             if self.check_single_collision(entity):
                 return True
@@ -23,5 +22,5 @@ class CollidableMixin(Entity):
             if isinstance(other, CollidableMixin)
             else self.radius
         )
-        print(f"Collision {self=} -- {other=}, {radius=}")
+
         return self.position.equals(other.position, radius)

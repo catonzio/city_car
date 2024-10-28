@@ -58,7 +58,7 @@ class Application:
         if keys[pygame.K_r]:
             retro = True
 
-        print(f"{acceleration=}, {steer=}, {handbrake=}, {retro=}")
+        # print(f"{acceleration=}, {steer=}, {handbrake=}, {retro=}")
         return CarKeysParams(
             acceleration=acceleration, steer=steer, handbrake=handbrake, retro=retro
         )
@@ -78,14 +78,14 @@ class Application:
         # draw background
         self.screen.fill(Colors.GREEN)
         # draw grid
-        self.draw_grid()
+        # self.draw_grid()
 
         self.game_engine.draw(self.screen)
 
         # render the text
         player: Car = self.game_engine.player
         coordinates_text = self.font.render(
-            f"{player.position}, s: {player.speed} sa: {degrees(player.steer_angle):.3f}, retro: {player.retro}",
+            f"{player.position}, s: {player.speed} speed: {player.speed.value:.3f} sa: {degrees(player.steer_angle):.3f}, retro: {player.retro:.1f}",
             True,
             Colors.DGREY,
         )

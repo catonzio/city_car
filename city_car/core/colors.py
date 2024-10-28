@@ -1,3 +1,9 @@
+def with_alpha(
+    color: tuple[int, int, int], alpha: int = 255
+) -> tuple[int, int, int, int]:
+    return (*color, alpha)
+
+
 class Colors:
     RED = (83, 0, 0)
     GREEN = (35, 101, 51)

@@ -1,12 +1,12 @@
-from dataclasses import dataclass, field
-from math import atan2, degrees, pi
+from dataclasses import dataclass
+from math import degrees, pi
 
 import pygame
 from pygame import SRCALPHA, Surface
 
 from city_car.configs.constants import SCREEN_CENTER
-from city_car.core.colors import Colors
-from city_car.models.drawable import Drawable
+from city_car.core.colors import Colors, with_alpha
+from city_car.models.drawable import Drawable, draw_circle_alpha
 from city_car.models.vector import Vector
 
 from .movable import MovableMixin
@@ -55,4 +55,8 @@ class Car(MovableMixin, Drawable):
         screen.blit(rotated, new_rect.topleft)
 
         end_line_pos = pos + self.speed.normalize() * 20
+        # pygame.draw.circle(screen, Colors.WHITE, pos.to_tuple(), self.radius)
+        draw_circle_alpha(
+            screen, with_alpha(Colors.WHITE, 128), pos.to_tuple(), self.radius
+        )
         pygame.draw.line(screen, Colors.CYAN, pos.to_tuple(), end_line_pos.to_tuple())
