@@ -62,3 +62,10 @@ class Position:
 
     def __repr__(self) -> str:
         return f"({self.x:.3f}, {self.y:.3f})"
+
+    def to_json(self) -> dict[str, float]:
+        return {"x": self.x, "y": self.y}
+
+    @staticmethod
+    def from_json(json: dict[str, float]) -> "Position":
+        return Position(x=json["x"], y=json["y"])

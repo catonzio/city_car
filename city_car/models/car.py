@@ -56,7 +56,7 @@ class Car(MovableMixin, Drawable):
 
         end_line_pos = pos + self.speed.normalize() * 20
         # pygame.draw.circle(screen, Colors.WHITE, pos.to_tuple(), self.radius)
-        draw_circle_alpha(
-            screen, with_alpha(Colors.WHITE, 128), pos.to_tuple(), self.radius
-        )
+        # draw_circle_alpha(
+        #     screen, with_alpha(Colors.WHITE, 128), pos.to_tuple(), self.radius
+        # )
         pygame.draw.line(screen, Colors.CYAN, pos.to_tuple(), end_line_pos.to_tuple())

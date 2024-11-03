@@ -5,3 +5,4 @@ from .entity import Entity
 from .movable import MovableMixin
 from .obstacle import Obstacle
 from .position import Position
+from .street_tile import StreetTile

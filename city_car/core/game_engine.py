@@ -1,3 +1,4 @@
+import json
 from pygame import Surface
 
 from city_car.configs.constants import SCREEN_CENTER
@@ -55,6 +56,9 @@ class GameEngine:
                 ),
             ]
         )
+        obs = [o.to_json() for o in self.obstacles]
+        with open("map.json", "w") as f:
+            f.write(json.dumps(obs))
 
     def close(self): ...
 
