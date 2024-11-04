@@ -5,8 +5,8 @@ import pygame
 from pygame import SRCALPHA, Surface
 
 from city_car.configs.constants import SCREEN_CENTER
-from city_car.core.colors import Colors, with_alpha
-from city_car.models.drawable import Drawable, draw_circle_alpha
+from city_car.core.colors import Colors
+from city_car.models.drawable import Drawable
 from city_car.models.vector import Vector
 
 from .movable import MovableMixin

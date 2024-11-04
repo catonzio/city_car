@@ -1,19 +1,20 @@
-import json
+from pathlib import Path
 from pygame import Surface
 
 from city_car.configs.constants import SCREEN_CENTER
 from city_car.core.colors import Colors
-from city_car.models import Car, Obstacle, Position
+from city_car.models import Car, Position
+from city_car.models.environment import Environment
 
 from .car_keys_params import CarKeysParams
 
 
 class GameEngine:
     player: Car
-    obstacles: list[Obstacle]
+    environment: Environment
 
-    def __init__(self):
-        self.obstacles = []
+    def __init__(self, environ_file: Path | str):
+        self.environment = Environment.from_file(environ_file)
 
     def initialize(self):
         self.player = Car(
@@ -24,49 +25,14 @@ class GameEngine:
             steer_angle=0,
             color=Colors.RED,
         )
-        self.obstacles.extend(
-            [
-                Obstacle(
-                    2,
-                    position=Position(100, 100),
-                    width=30,
-                    height=20,
-                    color=Colors.BLUE,
-                ),
-                Obstacle(
-                    3,
-                    position=Position(700, 500),
-                    width=30,
-                    height=20,
-                    color=Colors.BLUE,
-                ),
-                Obstacle(
-                    4,
-                    position=Position(100, 500),
-                    width=30,
-                    height=20,
-                    color=Colors.BLUE,
-                ),
-                Obstacle(
-                    5,
-                    position=Position(700, 100),
-                    width=30,
-                    height=20,
-                    color=Colors.BLUE,
-                ),
-            ]
-        )
-        obs = [o.to_json() for o in self.obstacles]
-        with open("map.json", "w") as f:
-            f.write(json.dumps(obs))
 
     def close(self): ...
 
     def tick(self, time_delta: float, car_key_params: CarKeysParams):
-        self.player.move(time_delta, car_key_params, self.obstacles)
+        self.player.move(time_delta, car_key_params, self.environment.obstacles)
 
     def draw(self, screen: Surface):
-        self.player.draw(screen)
+        for drawable in self.environment.get_all():
+            drawable.draw(screen, self.player.position)
 
-        for obstacle in self.obstacles:
-            obstacle.draw(screen, self.player.position)
+        self.player.draw(screen)

@@ -1,45 +1,54 @@
-import json
-from typing import Any
-
 from pathlib import Path
-from city_car.models import StreetTile, Obstacle
+from city_car.configs.constants import CENTER_H, CENTER_W
+from city_car.core.colors import Colors
+from city_car.models import Obstacle, StreetTile, Environment
+from city_car.models.position import Position
+from city_car.configs import MAPS_PATH
 
 
-class Environment:
-    street_tiles: list[StreetTile] = []
-    obstacles: list[Obstacle] =  []
+class MapBuilder:
+    environment: Environment
 
-    def __init__(
-        self,
-        street_tiles: list[StreetTile] | None = None,
-        obstacles: list[Obstacle] | None = None,
-    ):
-        self.street_tiles = street_tiles if street_tiles else []
-        self.obstacles = obstacles if obstacles else []
+    def __init__(self):
+        self.environment = Environment()
+
+    def build(self):
+        self.build_obstacles()
+        self.build_street_tiles()
 
     def build_obstacles(self):
-        obstacles: list[Obstacle] = []
-        self.obstacles.extend(obstacles)
+        obstacles: list[Obstacle] = [
+            Obstacle(
+                id=i,
+                width=300,
+                height=100,
+                position=Position(x=(i * 300) + CENTER_W, y=CENTER_H + 200),
+                color=Colors.BLUE,
+            )
+            for i in range(-10, 10)
+        ]
+        self.environment.obstacles.extend(obstacles)
 
     def build_street_tiles(self):
-        street_tiles: list[StreetTile] = []
-        self.street_tiles.extend(street_tiles)
-
-    def to_json(self) -> dict[str, Any]:
-        return {
-            "street_tiles": [st.to_json() for st in self.street_tiles],
-            "obstacles": [ob.to_json() for ob in self.obstacles],
-        }
+        street_tiles: list[StreetTile] = [
+            StreetTile(
+                id=i,
+                width=100,
+                height=100,
+                position=Position(x=(i * 100) + CENTER_W, y=CENTER_H),
+                color=Colors.LGREY,
+                radius=0,
+            )
+            for i in range(-10, 10)
+        ]
+        self.environment.street_tiles.extend(street_tiles)
 
     def to_file(self, file_path: Path | str) -> None:
-        json_repr: dict[str, Any] = self.to_json()
+        self.environment.to_file(file_path)
 
-        with open(file_path, "w") as f:
-            f.write(json.dumps(json_repr, indent=4))
 
-    @staticmethod
-    def from_json(json: dict[str, Any]) -> "Environment":
-        return Environment(
-            street_tiles=json.get("street_tiles", None),
-            obstacles=json.get("obstacles", None),
-        )
+if __name__ == "__main__":
+    map_builder = MapBuilder()
+    map_builder.build()
+
+    map_builder.to_file(MAPS_PATH / "map1.json")

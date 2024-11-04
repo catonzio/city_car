@@ -1,6 +1,15 @@
 from dataclasses import dataclass, field
 
+from city_car.configs.constants import SCREEN_HEIGHT, SCREEN_WIDTH
+
 from .position import Position
+
+
+def to_relative(position: Position, player_position: Position) -> Position:
+    return Position(
+        position.x - player_position.x + SCREEN_WIDTH / 2,
+        position.y - player_position.y + SCREEN_HEIGHT / 2,
+    )
 
 
 @dataclass
@@ -29,6 +38,7 @@ class Entity:
         self, offset: Position | None = None
     ) -> tuple[float, float, float, float]:
         offset = offset if offset else Position.zero()
-        tl_x = self.position.x - self.width / 2 - offset.x / 2
-        tl_y = self.position.y - self.height / 2 - offset.y / 2
+        relative: Position = to_relative(self.position, offset)
+        tl_x = relative.x - self.width / 2
+        tl_y = relative.y - self.height / 2
         return tl_x, tl_y, self.width, self.height

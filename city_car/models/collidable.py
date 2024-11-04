@@ -6,10 +6,10 @@ from .entity import Entity
 
 @dataclass
 class CollidableMixin(Entity):
-
     def check_collision(self, other_entities: Sequence[Entity]) -> bool:
         for entity in other_entities:
             if self.check_single_collision(entity):
+                print(f"Collision with {entity}")
                 return True
         return False
 

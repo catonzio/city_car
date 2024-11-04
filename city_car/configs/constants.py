@@ -3,6 +3,7 @@ from math import pi
 SCREEN_WIDTH: int = 800
 SCREEN_HEIGHT: int = 600
 SCREEN_CENTER: tuple[float, float] = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
+CENTER_W, CENTER_H = SCREEN_CENTER
 FPS: int = 30
 
 TURN_ANGLE: float = pi / 20

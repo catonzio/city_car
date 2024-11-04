@@ -1,7 +1,6 @@
-from dataclasses import Field, dataclass, field
+from dataclasses import dataclass, field
 from math import cos, pi, sin
 from typing import Sequence
-from xml.dom.minidom import Entity
 
 from city_car.configs.constants import HANDBRAKE
 from city_car.core.car_keys_params import CarKeysParams

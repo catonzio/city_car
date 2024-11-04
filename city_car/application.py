@@ -1,5 +1,6 @@
+from pathlib import Path
 import sys
-from math import degrees, pi
+from math import degrees
 
 import pygame
 from pygame import Surface
@@ -7,7 +8,7 @@ from pygame.event import Event
 from pygame.font import Font
 
 from city_car.configs.constants import ACCELERATION, HANDBRAKE, TURN_ANGLE
-from city_car.core import Colors, GameEngine, Overlay, UiState, car_keys_params
+from city_car.core import Colors, GameEngine, Overlay, UiState
 from city_car.core.car_keys_params import CarKeysParams
 from city_car.models.car import Car
 from city_car.models.position import Position
@@ -22,12 +23,18 @@ class Application:
     screen: Surface
     font: Font
 
-    def __init__(self, title: str, screen_width: int, screen_height: int):
+    def __init__(
+        self,
+        title: str,
+        screen_width: int,
+        screen_height: int,
+        environ_file: Path | str,
+    ):
         pygame.init()
         self.title = title
         self.screen_width = screen_width
         self.screen_height = screen_height
-        self.game_engine = GameEngine()
+        self.game_engine = GameEngine(environ_file)
         self.overlay = Overlay(self.screen_width, self.screen_height)
         self.screen_center: Position = Position(screen_width / 2, screen_height / 2)
 
